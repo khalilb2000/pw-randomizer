@@ -33,17 +33,9 @@
                 return;
             }
 
-            const specialChars = prompt("At least one special charater is required!");
-              if (!specialChars){
-                alert("Please type special charaters you would like to include")
-                return;
-              }
-            
-
-
             const includeLowercase = confirm("Include lowercase letters?");
             const includeUppercase = confirm("Include uppercase letters?");
-            
+            const includeSymbols = confirm("Include symbols?");
             const includeNumbers = confirm("Include numbers?");
 
             if (!includeLowercase && !includeUppercase && !includeSymbols && !includeNumbers) {
