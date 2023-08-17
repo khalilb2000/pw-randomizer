@@ -8,44 +8,63 @@
     <title>The password generator!</title>
 </head>
 <body>
-    <div class = "container"> 
-    <h1>Generate a <br><span>Random Password</span></h1>'
-    <div class = "display">
-        <input type="text" id="password" placeholder="Password">
-        <img src="copy.png">
- </div>
- <button onclick="createPassword()"><img src="images.png"> Generate Password</button>
+    <div class="container"> 
+        <h1>Generate a <br><span>Random Password</span></h1>
+        <div class="display">
+            <input type="text" id="password" placeholder="Password">
+            <img src="copy.png">
+        </div>
+        <button onclick="generatePassword()"><img src="images.png"> Generate Password</button>
     </div>
    
-   <script>
+    <script>
+        const passwordBox = document.getElementById("password");
 
-const passwordBox = document.getElementById("password")
-  const length = 12;
+        const lowercase = "abcdefghijklmnopqrstuvwxyz";
+        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const symbol = "!@#$%^&*=+<>,.?/;'";
+        const number = "0123456789";
 
-  const symbol = "!@#$%^&*=+<>,.?/;'";
-  const number = "0123456789";
-  const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        function generatePassword() {
+            const userLength = parseInt(prompt("Enter password length (between 8 and 128):"));
 
-  const allChars = upperCase + number + symbol;
-  
-  function createPassword(){
-    let password = "";
-    password += symbol[Math.floor(Math.random()* symbol.length)]
-    password += number[Math.floor(Math.random() * number.length)]
-    password += upperCase[Math.floor(Math.random() * upperCase.length)]
+            if (userLength < 8 || userLength > 128 || isNaN(userLength)) {
+                alert("Please enter a valid length between 8 and 128.");
+                return;
+            }
 
-    while (length > password.length){
-        password += allChars[Math.floor(Math.random() * allChars.length)];
-    }
-    passwordBox.value = password;
-    
-  }
-
+            const specialChars = prompt("At least one special charater is required!");
+              if (!specialChars){
+                alert("Please type special charaters you would like to include")
+                return;
+              }
+            
 
 
+            const includeLowercase = confirm("Include lowercase letters?");
+            const includeUppercase = confirm("Include uppercase letters?");
+            
+            const includeNumbers = confirm("Include numbers?");
 
+            if (!includeLowercase && !includeUppercase && !includeSymbols && !includeNumbers) {
+                alert("At least one character type should be selected.");
+                return;
+            }
+
+            let charBank = "";
+            if (includeLowercase) charBank += lowercase;
+            if (includeUppercase) charBank += uppercase;
+            if (includeSymbols) charBank += symbol;
+            if (includeNumbers) charBank += number;
+
+            let password = "";
+            for (let i = 0; i < userLength; i++) {
+                const randomIndex = Math.floor(Math.random() * charBank.length);
+                password += charBank[randomIndex];
+            }
+
+            passwordBox.value = password;
+        }
     </script>
-
-   
 </body>
 </html>
